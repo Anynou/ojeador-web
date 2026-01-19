@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ScoutPro · Scouting de futbolistas basado en datos</title>
+  <meta name="description" content="Aplicación de scouting para clubes semi-profesionales: búsqueda de futbolistas, índices propios, jugadores similares y contexto por liga. Contacta para demo." />
+
+  <!-- Tipografía -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:  #071018;
+      --bg2: #050b10;
+
+      --text: rgba(255,255,255,.95);
+      --muted: rgba(255,255,255,.70);
+      --border: rgba(255,255,255,.12);
+
+      --brand: #1f6fd1;
+      --brand-soft: #3b82c4;
+
+      --shadow: 0 16px 46px rgba(0,0,0,.32);
+      --radius: 18px;
+      --max: 1120px;
+    }
+
+    *{ box-sizing: border-box; }
+    html,body{ height:100%; }
+
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color: var(--text);
+      background: linear-gradient(180deg, var(--bg), var(--bg2));
+      line-height: 1.55;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before{
+      content:"";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background: linear-gradient(
+        135deg,
+        rgba(31,111,209,.08),
+        rgba(7,16,24,0) 45%,
+        rgba(59,130,196,.06)
+      );
+      opacity: .55;
+      transform: translateZ(0);
+    }
+
+    a{ color: inherit; text-decoration: none; }
+    a:hover{ text-decoration: underline; text-underline-offset: 3px; }
+
+    .container{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header */
+    header{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+      background: rgba(5,11,16,.82);
+      border-bottom: 1px solid rgba(255,255,255,.10);
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 0;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      min-width: 210px;
+    }
+
+    .logo{
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      object-fit: contain;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.12);
+      padding: 6px;
+    }
+
+    .brand-title{
+      display:flex;
+      flex-direction: column;
+      line-height: 1.15;
+    }
+    .brand-title strong{ font-weight: 700; letter-spacing: .2px; }
+    .brand-title span{ color: var(--muted); font-size: .9rem; }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .chip{
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: .92rem;
+      border: 1px solid rgba(31,111,209,.24);
+      background: rgba(31,111,209,.05);
+      color: rgba(255,255,255,.85);
+    }
+    .chip:hover{
+      background: rgba(31,111,209,.08);
+      text-decoration:none;
+      color: rgba(255,255,255,.95);
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      font-weight: 600;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease, filter .12s ease;
+      white-space: nowrap;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.085);
+      text-decoration:none;
+      border-color: rgba(255,255,255,.18);
+    }
+
+    .btn-primary{
+      border: 0;
+      background: linear-gradient(135deg, var(--brand), var(--brand-soft));
+      color: #ffffff;
+      font-weight: 700;
+    }
+    .btn-primary:hover{ filter: brightness(1.05); }
+
+    /* Hero */
+    .hero{ padding: 56px 0 28px; }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 26px;
+      align-items: stretch;
+    }
+
+    .kicker{
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(5,11,16,.55);
+      color: rgba(255,255,255,.82);
+      font-size: .92rem;
+      width: fit-content;
+      backdrop-filter: blur(10px);
+    }
+
+    h1{
+      margin: 14px 0 10px;
+      font-size: clamp(2.1rem, 3.6vw, 3.2rem);
+      line-height: 1.12;
+      letter-spacing: -.6px;
+      text-shadow: 0 12px 44px rgba(0,0,0,.55);
+    }
+
+    .subtitle{
+      color: var(--muted);
+      font-size: 1.08rem;
+      max-width: 62ch;
+      margin: 0 0 18px;
+      text-shadow: 0 10px 40px rgba(0,0,0,.40);
+    }
+
+    .hero-actions{
+      display:flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .stats{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .stat{
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(5,11,16,.50);
+      color: var(--muted);
+      font-size: .95rem;
+      backdrop-filter: blur(10px);
+    }
+    .stat b{ color: var(--text); font-weight: 700; }
+
+    .hero-card,
+    .card,
+    .contact-box{
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: rgba(10,16,22,.72);
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card{
+      border-radius: var(--radius);
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card-inner{
+      position: relative;
+      display:flex;
+      flex-direction: column;
+      gap: 14px;
+      height: 100%;
+    }
+
+    .mini-title{
+      font-weight: 700;
+      letter-spacing: .2px;
+      font-size: 1.05rem;
+    }
+
+    .list{
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
+      color: var(--muted);
+    }
+
+    .li{
+      display:flex;
+      gap: 10px;
+      align-items:flex-start;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+    }
+
+    .tick{
+      width: 22px;
+      height: 22px;
+      border-radius: 8px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      background: rgba(31,111,209,.18);
+      border: 1px solid rgba(31,111,209,.32);
+      color: rgba(255,255,255,.92);
+      flex: 0 0 auto;
+      margin-top: 1px;
+      font-weight: 900;
+    }
+
+    section{ padding: 34px 0; }
+
+    .section-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 28px 0 12px;
+    }
+
+    h2{
+      margin: 0;
+      font-size: 1.55rem;
+      letter-spacing: -.2px;
+    }
+
+    .section-desc{
+      margin: 6px 0 0;
+      color: var(--muted);
+      max-width: 80ch;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .card{
+      grid-column: span 6;
+      border-radius: var(--radius);
+      padding: 18px;
+    }
+
+    .card h3{
+      margin: 0 0 6px;
+      font-size: 1.12rem;
+      letter-spacing: -.2px;
+    }
+
+    .card p{
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .badges{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .badge{
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(31,111,209,.22);
+      background: rgba(31,111,209,.05);
+      color: rgba(255,255,255,.86);
+      font-size: .92rem;
+    }
+
+    .card-wide{ grid-column: span 12; }
+
+    .split{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .mock{
+      border-radius: var(--radius);
+      padding: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      color: var(--muted);
+      font-size: .95rem;
+    }
+    .mock b{ color: var(--text); }
+
+    .contact{
+      margin-top: 10px;
+      border-top: 1px solid rgba(255,255,255,.10);
+      padding-top: 30px;
+    }
+
+    .contact-box{
+      border-radius: var(--radius);
+      padding: 18px;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .contact-info{
+      display:flex;
+      flex-direction: column;
+      gap: 6px;
+      color: var(--muted);
+    }
+    .contact-info b{ color: var(--text); }
+
+    .form{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .input{
+      min-width: 220px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      outline: none;
+    }
+    .input::placeholder{ color: rgba(255,255,255,.55); }
+
+    footer{
+      padding: 28px 0 34px;
+      color: rgba(255,255,255,.55);
+      font-size: .92rem;
+      border-top: 1px solid rgba(255,255,255,.08);
+      margin-top: 26px;
+    }
+
+    @media (max-width: 900px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .card{ grid-column: span 12; }
+      .nav-links{ gap: 10px; }
+      .brand{ min-width: unset; }
+      .split{ grid-template-columns: 1fr; }
+      .form{ justify-content: flex-start; }
+      .input{ width: 100%; min-width: unset; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- HEADER -->
+  <header>
+    <div class="container">
+      <div class="nav">
+        <a class="brand" href="#top" aria-label="ElOjeador">
+          <!-- Cambia el src al nombre/ruta real de tu imagen -->
+          <img class="logo" src="logo.png" alt="Logo de ElOjeador" />
+          <div class="brand-title">
+            <strong>ElOjeador</strong>
+            <span>Scouting inteligente · Semi-pro</span>
+          </div>
+        </a>
+
+        <nav class="nav-links" aria-label="Navegación">
+          <a class="chip" href="#producto">Producto</a>
+          <a class="chip" href="#funciones">Funciones</a>
+          <a class="chip" href="#casos">Casos</a>
+          <a class="chip" href="#contacto">Contacto</a>
+          <a class="btn btn-primary" href="mailto:contacto@elojeador?subject=Demo%20ElOjeador">Solicitar demo</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main id="top" class="container">
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <div class="kicker">🔎 Búsqueda de jugadores · 📈 Índices propios · 🌍 Similares por región</div>
+          <h1>Scouting de futbolistas con datos claros, contexto real y decisiones más rápidas</h1>
+          <p class="subtitle">
+            Una aplicación pensada para <b>clubes semi-profesionales</b>: busca jugadores, entiende su encaje por rol y
+            apóyate en <b>índices propios</b> + <b>contexto por liga</b> para comparar con criterio (sin perderte en métricas sueltas).
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#contacto">Hablemos</a>
+            <a class="btn" href="#funciones">Ver funcionalidades</a>
+            <a class="btn" href="#casos">Ver casos</a>
+          </div>
+
+          <div class="stats" aria-label="Indicadores">
+            <div class="stat"><b>Búsqueda</b> por rol, liga, edad y perfil</div>
+            <div class="stat"><b>Índices</b> propios para clasificar</div>
+            <div class="stat"><b>Similares</b> país / Europa / América</div>
+          </div>
+        </div>
+
+        <aside class="hero-card" aria-label="Qué obtienes">
+          <div class="hero-card-inner">
+            <div class="mini-title">Qué te aporta ScoutPro</div>
+            <ul class="list">
+              <li class="li"><span class="tick">✓</span><span><b>Shortlists rápidas</b>: filtra y detecta perfiles que encajan.</span></li>
+              <li class="li"><span class="tick">✓</span><span><b>Comparación justa</b>: índices de liga para dar contexto al rendimiento.</span></li>
+              <li class="li"><span class="tick">✓</span><span><b>Jugadores similares</b>: alternativas locales y oportunidades fuera.</span></li>
+              <li class="li"><span class="tick">✓</span><span><b>Decisión accionable</b>: veredicto claro + detalles cuando los necesitas.</span></li>
+            </ul>
+
+            <div style="margin-top:auto; display:flex; gap:10px; flex-wrap:wrap;">
+              <a class="btn btn-primary" href="mailto:contacto@elojeador.es?subject=Demo%20ElOjeador">📧 Pedir demo</a>
+              <a class="btn" href="#producto">📌 Ver producto</a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- PRODUCTO -->
+    <section id="producto">
+      <div class="section-head">
+        <div>
+          <h2>De datos dispersos a una decisión clara</h2>
+          <p class="section-desc">
+            Para un club semi-pro, el tiempo y el presupuesto importan. ScoutPro ordena la información y la convierte
+            en una experiencia sencilla: <b>filtrar → comparar → decidir → contactar</b>.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>El problema</h3>
+          <p>
+            Vídeo, informes, intuición y datos “a medias” en sitios distintos. Comparar jugadores de ligas diferentes
+            sin contexto suele llevar a errores o a perder oportunidades.
+          </p>
+        </div>
+        <div class="card">
+          <h3>La solución</h3>
+          <p>
+            Un sistema único con <b>buscador</b>, <b>índices propios</b>, <b>similares por región</b> y
+            <b>contexto por liga</b> para que el club decida con confianza.
+          </p>
+        </div>
+
+        <div class="card card-wide">
+          <h3>Cómo se ve (ejemplo)</h3>
+          <div class="split">
+            <div class="mock">
+              <b>Buscador</b><br/>
+              Filtros por: Posición/rol · País · Liga · Edad · Pie · Valor · Minutos · Fin de contrato<br/>
+              Resultado: lista priorizada por tus <b>índices</b> + “por qué” del ranking.
+            </div>
+            <div class="mock">
+              <b>Ficha jugador</b><br/>
+              Índices propios · Radar/KPIs · Trayectoria · Rendimiento reciente · Contexto de liga<br/>
+              Sección <b>Similares</b>: mismo país / Europa / América + comparativa rápida.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FUNCIONALIDADES -->
+    <section id="funciones">
+      <div class="section-head">
+        <div>
+          <h2>Funcionalidades clave</h2>
+          <p class="section-desc">
+            Lo que más valor aporta en el día a día del scouting: rapidez, criterio y contexto.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Buscador de futbolistas</h3>
+          <p>Explora perfiles por posición/rol con filtros prácticos y resultados priorizados por tus índices.</p>
+          <div class="badges">
+            <span class="badge">Filtros</span>
+            <span class="badge">Rankings</span>
+            <span class="badge">Shortlists</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Índices propios (ranking)</h3>
+          <p>Clasificación objetiva para identificar talento y encaje: del “quién” al “por qué”.</p>
+          <div class="badges">
+            <span class="badge">Score global</span>
+            <span class="badge">Por rol</span>
+            <span class="badge">Comparables</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Similares por país y por región</h3>
+          <p>Encuentra alternativas realistas: similares en el mismo país y también oportunidades en Europa y América.</p>
+          <div class="badges">
+            <span class="badge">Mismo país</span>
+            <span class="badge">Europa</span>
+            <span class="badge">América</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Contexto por liga</h3>
+          <p>Índices por competición para interpretar los datos del jugador según el nivel y estilo de su liga.</p>
+          <div class="badges">
+            <span class="badge">Nivel liga</span>
+            <span class="badge">Benchmark</span>
+            <span class="badge">Ajuste de contexto</span>
+          </div>
+        </div>
+
+        <div class="card card-wide">
+          <h3>Opcional: implantación rápida para tu club</h3>
+          <p>
+            Onboarding sin fricción: definimos roles/criterios del club, configuramos filtros e índices, y dejamos listas
+            las vistas que el staff usará cada semana.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CASOS DE USO -->
+    <section id="casos">
+      <div class="section-head">
+        <div>
+          <h2>Casos de uso típicos</h2>
+          <p class="section-desc">Ejemplos reales para un club semi-pro: fichajes, sustituciones y mejora de plantilla.</p>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Sustituir una baja</h3>
+          <p>
+            Encuentra perfiles equivalentes con “similares” y valida con contexto de liga para no sobre/infra-valorar estadísticas.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Buscar un rol específico</h3>
+          <p>
+            Extremo vertical, 6 posicional, central dominador… filtras por rol y priorizas por tus índices (no por ruido).
+          </p>
+        </div>
+        <div class="card">
+          <h3>Oportunidades fuera del mercado local</h3>
+          <p>
+            Detecta jugadores comparables en Europa y América para ampliar opciones cuando el presupuesto es ajustado.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Shortlist con criterio</h3>
+          <p>
+            Lista final defendible: ranking + explicación del índice + comparativa de similares (menos discusión, más acción).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section id="contacto" class="contact">
+      <div class="section-head">
+        <div>
+          <h2>Contacto</h2>
+          <p class="section-desc">Cuéntanos tu objetivo (rol/posición, ligas, presupuesto) y te enseñamos una demo adaptada.</p>
+        </div>
+      </div>
+
+      <div class="contact-box">
+        <div class="contact-info">
+          <div><b>Email:</b> <a href="mailto:contacto@elojeador?subject=Demo%20ElOjeador">contacto@elojeador.es</a></div>
+          <div><b>Twitter:</b> <a class="btn" href="https://x.com/ElOjeador_data" target="_blank" rel="noopener">🐦 X / Twitter</a></div>
+          <div><b>Respuesta:</b> en menos de 24–48h laborables</div>
+        </div>
+
+        <!-- Mini “form” sin backend: abre el mail con asunto y campos -->
+        <div class="form">
+          <input class="input" id="club" placeholder="Nombre del club" />
+          <input class="input" id="objetivo" placeholder="Qué necesitas (ej. ‘central sub-23’)" />
+          <a class="btn btn-primary" href="#" onclick="
+            const club = encodeURIComponent(document.getElementById('club').value || 'Club');
+            const obj  = encodeURIComponent(document.getElementById('objetivo').value || 'Quiero una demo y conocer precios.');
+            const subject = encodeURIComponent('Demo ElOjeador · ' + decodeURIComponent(club));
+            const body = encodeURIComponent(
+              'Hola,\n\nSomos ' + decodeURIComponent(club) + ' y queremos una demo de ElOjeador.\n\nObjetivo: ' + decodeURIComponent(obj) + '\n\nGracias.'
+            );
+            window.location.href = 'mailto:contacto@elojeador.es?subject=' + subject + '&body=' + body;
+            return false;
+          ">Enviar</a>
+          <a class="btn" href="mailto:contacto@elojeador.es?subject=Precios%20ElOjeador">Ver precios</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      © 2026 · ElOjeador · Scouting de futbolistas basado en datos
+    </footer>
+  </main>
+</body>
+</html>
