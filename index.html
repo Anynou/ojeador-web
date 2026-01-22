@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ScoutPro · Scouting de futbolistas basado en datos</title>
-  <meta name="description" content="Aplicación de scouting para clubes semi-profesionales: búsqueda de futbolistas, índices propios, jugadores similares y contexto por liga. Contacta para demo." />
+  <title>ElOjeador · Scouting de futbolistas basado en datos</title>
+  <meta name="description" content="Plataforma de scouting: buscador de jugadores, rankings por índices, comparación 1v1, jugadores similares y contexto por liga. Plan Free, Pro y Business. Pide demo o accede al dashboard." />
 
   <!-- Tipografía -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -88,7 +88,7 @@
       display:flex;
       align-items:center;
       gap: 12px;
-      min-width: 210px;
+      min-width: 240px;
     }
 
     .logo{
@@ -195,7 +195,7 @@
     .subtitle{
       color: var(--muted);
       font-size: 1.08rem;
-      max-width: 62ch;
+      max-width: 68ch;
       margin: 0 0 18px;
       text-shadow: 0 10px 40px rgba(0,0,0,.40);
     }
@@ -310,7 +310,7 @@
     .section-desc{
       margin: 6px 0 0;
       color: var(--muted);
-      max-width: 80ch;
+      max-width: 86ch;
     }
 
     .grid{
@@ -371,6 +371,51 @@
     }
     .mock b{ color: var(--text); }
 
+    .plans{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .plan{
+      grid-column: span 4;
+      border-radius: var(--radius);
+      padding: 18px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(10,16,22,.72);
+      box-shadow: var(--shadow);
+    }
+    .plan h3{ margin: 0 0 6px; font-size: 1.15rem; }
+    .plan .plan-sub{ color: var(--muted); margin: 0 0 12px; }
+    .plan .plan-tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-size:.9rem;
+      padding: 8px 10px;
+      border-radius:999px;
+      border: 1px solid rgba(31,111,209,.22);
+      background: rgba(31,111,209,.06);
+      color: rgba(255,255,255,.88);
+      margin-bottom: 12px;
+      width: fit-content;
+    }
+
+    .plan ul{
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+    .plan li{ margin: 8px 0; }
+
+    .plan .plan-actions{
+      margin-top: 14px;
+      display:flex;
+      gap:10px;
+      flex-wrap: wrap;
+    }
+
     .contact{
       margin-top: 10px;
       border-top: 1px solid rgba(255,255,255,.10);
@@ -425,6 +470,7 @@
     @media (max-width: 900px){
       .hero-grid{ grid-template-columns: 1fr; }
       .card{ grid-column: span 12; }
+      .plan{ grid-column: span 12; }
       .nav-links{ gap: 10px; }
       .brand{ min-width: unset; }
       .split{ grid-template-columns: 1fr; }
@@ -440,20 +486,20 @@
     <div class="container">
       <div class="nav">
         <a class="brand" href="#top" aria-label="ElOjeador">
-          <!-- Cambia el src al nombre/ruta real de tu imagen -->
           <img class="logo" src="logo.png" alt="Logo de ElOjeador" />
           <div class="brand-title">
             <strong>ElOjeador</strong>
-            <span>Scouting inteligente · Semi-pro</span>
+            <span>Scouting por datos · Free / Pro / Business</span>
           </div>
         </a>
 
         <nav class="nav-links" aria-label="Navegación">
           <a class="chip" href="#producto">Producto</a>
+          <a class="chip" href="#planes">Planes</a>
           <a class="chip" href="#funciones">Funciones</a>
-          <a class="chip" href="#casos">Casos</a>
           <a class="chip" href="#contacto">Contacto</a>
-          <a class="btn btn-primary" href="mailto:contacto@elojeador?subject=Demo%20ElOjeador">Solicitar demo</a>
+          <a class="btn" href="https://dashboard.elojeador.es" target="_blank" rel="noopener">Acceder</a>
+          <a class="btn btn-primary" href="#contacto">Solicitar demo</a>
         </nav>
       </div>
     </div>
@@ -464,39 +510,41 @@
     <section class="hero">
       <div class="hero-grid">
         <div>
-          <div class="kicker">🔎 Búsqueda de jugadores · 📈 Índices propios · 🌍 Similares por región</div>
-          <h1>Scouting de futbolistas con datos claros, contexto real y decisiones más rápidas</h1>
+          <div class="kicker">🔎 Buscador · 🧠 Scouting Index & Upside · 🧩 Similares · ⚖️ Comparador · 🌍 Contexto por liga</div>
+          <h1>Scouting rápido y defendible: filtra, compara y decide con contexto real</h1>
           <p class="subtitle">
-            Una aplicación pensada para <b>clubes semi-profesionales</b>: busca jugadores, entiende su encaje por rol y
-            apóyate en <b>índices propios</b> + <b>contexto por liga</b> para comparar con criterio (sin perderte en métricas sueltas).
+            ElOjeador unifica <b>búsqueda</b>, <b>rankings</b> y <b>comparación</b> en una sola herramienta.
+            Empieza en <b>Free</b> para explorar el dataset y sube a <b>Pro/Business</b> cuando necesites scouting avanzado
+            o información ampliada para mercado y decisiones.
           </p>
 
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#contacto">Hablemos</a>
-            <a class="btn" href="#funciones">Ver funcionalidades</a>
-            <a class="btn" href="#casos">Ver casos</a>
+            <a class="btn btn-primary" href="#contacto">Pedir demo</a>
+            <a class="btn" href="https://dashboard.elojeador.es" target="_blank" rel="noopener">Ir al dashboard</a>
+            <a class="btn" href="#planes">Ver planes</a>
           </div>
 
           <div class="stats" aria-label="Indicadores">
-            <div class="stat"><b>Búsqueda</b> por rol, liga, edad y perfil</div>
-            <div class="stat"><b>Índices</b> propios para clasificar</div>
-            <div class="stat"><b>Similares</b> país / Europa / América</div>
+            <div class="stat"><b>+37k jugadores</b> en el dataset</div>
+            <div class="stat"><b>Shortlists</b> con búsquedas guardadas + export CSV</div>
+            <div class="stat"><b>Similares</b> por liga/país/continente</div>
+            <div class="stat"><b>Comparación</b> 1v1 con pilares</div>
           </div>
         </div>
 
         <aside class="hero-card" aria-label="Qué obtienes">
           <div class="hero-card-inner">
-            <div class="mini-title">Qué te aporta ScoutPro</div>
+            <div class="mini-title">Qué te aporta ElOjeador</div>
             <ul class="list">
-              <li class="li"><span class="tick">✓</span><span><b>Shortlists rápidas</b>: filtra y detecta perfiles que encajan.</span></li>
-              <li class="li"><span class="tick">✓</span><span><b>Comparación justa</b>: índices de liga para dar contexto al rendimiento.</span></li>
-              <li class="li"><span class="tick">✓</span><span><b>Jugadores similares</b>: alternativas locales y oportunidades fuera.</span></li>
-              <li class="li"><span class="tick">✓</span><span><b>Decisión accionable</b>: veredicto claro + detalles cuando los necesitas.</span></li>
+              <li class="li"><span class="tick">✓</span><span><b>Shortlists rápidas</b>: filtra por posición, país, liga, edad, pie… y guarda búsquedas.</span></li>
+              <li class="li"><span class="tick">✓</span><span><b>Ranking accionable</b>: Scouting Index + Upside para priorizar perfiles con consistencia.</span></li>
+              <li class="li"><span class="tick">✓</span><span><b>Comparación 1v1</b>: dos jugadores, mismas métricas y lectura clara.</span></li>
+              <li class="li"><span class="tick">✓</span><span><b>Contexto por liga</b>: interpreta rendimiento comparándolo con el nivel de su competición.</span></li>
             </ul>
 
             <div style="margin-top:auto; display:flex; gap:10px; flex-wrap:wrap;">
-              <a class="btn btn-primary" href="mailto:contacto@elojeador.es?subject=Demo%20ElOjeador">📧 Pedir demo</a>
-              <a class="btn" href="#producto">📌 Ver producto</a>
+              <a class="btn btn-primary" href="#contacto">📧 Solicitar demo</a>
+              <a class="btn" href="#funciones">📌 Ver funcionalidades</a>
             </div>
           </div>
         </aside>
@@ -509,8 +557,8 @@
         <div>
           <h2>De datos dispersos a una decisión clara</h2>
           <p class="section-desc">
-            Para un club semi-pro, el tiempo y el presupuesto importan. ScoutPro ordena la información y la convierte
-            en una experiencia sencilla: <b>filtrar → comparar → decidir → contactar</b>.
+            ElOjeador está pensado para el día a día del scouting: <b>filtrar → priorizar → comparar → decidir</b>.
+            No es “otra tabla más”: es un flujo de trabajo con contexto para reducir ruido y acelerar decisiones.
           </p>
         </div>
       </div>
@@ -519,31 +567,95 @@
         <div class="card">
           <h3>El problema</h3>
           <p>
-            Vídeo, informes, intuición y datos “a medias” en sitios distintos. Comparar jugadores de ligas diferentes
-            sin contexto suele llevar a errores o a perder oportunidades.
+            Ver jugadores en distintas fuentes, comparar ligas sin referencia y justificar decisiones con información “a medias”.
+            Resultado: más tiempo, más discusión y más riesgo de infravalorar (o sobrevalorar) perfiles.
           </p>
         </div>
+
         <div class="card">
           <h3>La solución</h3>
           <p>
-            Un sistema único con <b>buscador</b>, <b>índices propios</b>, <b>similares por región</b> y
-            <b>contexto por liga</b> para que el club decida con confianza.
+            Un único dashboard con: <b>buscador</b>, <b>rankings por índices</b>, <b>similares</b>, <b>comparador</b>
+            y <b>contexto por liga</b>. Empiezas simple (Free) y escalas cuando tu operativa lo necesita.
           </p>
         </div>
 
         <div class="card card-wide">
-          <h3>Cómo se ve (ejemplo)</h3>
+          <h3>Cómo se usa (en 30 segundos)</h3>
           <div class="split">
             <div class="mock">
-              <b>Buscador</b><br/>
-              Filtros por: Posición/rol · País · Liga · Edad · Pie · Valor · Minutos · Fin de contrato<br/>
-              Resultado: lista priorizada por tus <b>índices</b> + “por qué” del ranking.
+              <b>Explora el dataset (Free)</b><br/>
+              Overview con KPIs + distribución por continente.<br/>
+              Players con filtros, mini-ficha, búsquedas guardadas y export CSV.<br/>
+              Leagues con ranking y métricas por competición.
             </div>
             <div class="mock">
-              <b>Ficha jugador</b><br/>
-              Índices propios · Radar/KPIs · Trayectoria · Rendimiento reciente · Contexto de liga<br/>
-              Sección <b>Similares</b>: mismo país / Europa / América + comparativa rápida.
+              <b>Scouting avanzado (Pro/Business)</b><br/>
+              Scouting Search: Scouting Index + Upside + filtros base.<br/>
+              Similar players por liga/país/continente y contexto de rendimiento vs media de liga.<br/>
+              Compare 1v1 para defender decisiones.
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PLANES -->
+    <section id="planes">
+      <div class="section-head">
+        <div>
+          <h2>Planes</h2>
+          <p class="section-desc">
+            Empieza en Free y sube solo cuando lo necesites. Todos los planes comparten el mismo dashboard y experiencia.
+          </p>
+        </div>
+      </div>
+
+      <div class="plans">
+        <div class="plan">
+          <div class="plan-tag">🟦 Free</div>
+          <h3>Explorar y hacer shortlists</h3>
+          <p class="plan-sub">Ideal para probar y trabajar el filtrado básico.</p>
+          <ul>
+            <li>Overview: KPIs + actividad + distribución del dataset</li>
+            <li>Players: filtros + mini ficha</li>
+            <li>Leagues: ranking y métricas</li>
+            <li>Búsquedas guardadas y export CSV</li>
+          </ul>
+          <div class="plan-actions">
+            <a class="btn" href="https://dashboard.elojeador.es" target="_blank" rel="noopener">Acceder</a>
+            <a class="btn btn-primary" href="#contacto">Pedir demo</a>
+          </div>
+        </div>
+
+        <div class="plan">
+          <div class="plan-tag">🟪 Pro</div>
+          <h3>Scouting avanzado</h3>
+          <p class="plan-sub">Para priorizar y comparar perfiles con criterio.</p>
+          <ul>
+            <li>Todo lo de Free</li>
+            <li>Scouting Search: Scouting Index + Upside</li>
+            <li>Similar players por liga/país/continente</li>
+            <li>Contexto por liga y comparación 1v1</li>
+            <li>Búsquedas guardadas y export CSV</li>
+          </ul>
+          <div class="plan-actions">
+            <a class="btn btn-primary" href="#contacto">Solicitar acceso Pro</a>
+          </div>
+        </div>
+
+        <div class="plan">
+          <div class="plan-tag">🟨 Business</div>
+          <h3>Detalle ampliado para mercado</h3>
+          <p class="plan-sub">Cuando necesitas profundidad (según disponibilidad/licencia de datos).</p>
+          <ul>
+            <li>Todo lo de Pro</li>
+            <li>Vista/inspector con endpoints private</li>
+            <li>Detalle + contrato</li>
+            <li>Últimos partidos y carrera</li>
+          </ul>
+          <div class="plan-actions">
+            <a class="btn btn-primary" href="#contacto">Solicitar demo Business</a>
           </div>
         </div>
       </div>
@@ -555,57 +667,57 @@
         <div>
           <h2>Funcionalidades clave</h2>
           <p class="section-desc">
-            Lo que más valor aporta en el día a día del scouting: rapidez, criterio y contexto.
+            Lo que aporta valor de verdad: rapidez, consistencia y contexto.
           </p>
         </div>
       </div>
 
       <div class="grid">
         <div class="card">
-          <h3>Buscador de futbolistas</h3>
-          <p>Explora perfiles por posición/rol con filtros prácticos y resultados priorizados por tus índices.</p>
+          <h3>Buscador de jugadores (Free)</h3>
+          <p>Filtros prácticos, tabla clara, mini ficha y exportación para shortlists.</p>
           <div class="badges">
             <span class="badge">Filtros</span>
-            <span class="badge">Rankings</span>
-            <span class="badge">Shortlists</span>
+            <span class="badge">Búsquedas guardadas</span>
+            <span class="badge">Export CSV</span>
           </div>
         </div>
 
         <div class="card">
-          <h3>Índices propios (ranking)</h3>
-          <p>Clasificación objetiva para identificar talento y encaje: del “quién” al “por qué”.</p>
+          <h3>Scouting Index y Upside (Pro/Business)</h3>
+          <p>Dos lecturas: rendimiento actual (scouting) y potencial/crecimiento (upside) para priorizar.</p>
           <div class="badges">
-            <span class="badge">Score global</span>
-            <span class="badge">Por rol</span>
-            <span class="badge">Comparables</span>
+            <span class="badge">Ranking</span>
+            <span class="badge">Prioridad</span>
+            <span class="badge">Consistencia</span>
           </div>
         </div>
 
         <div class="card">
-          <h3>Similares por país y por región</h3>
-          <p>Encuentra alternativas realistas: similares en el mismo país y también oportunidades en Europa y América.</p>
+          <h3>Similares multi-scope (Pro/Business)</h3>
+          <p>Encuentra alternativas por liga, país, continente o global y detecta oportunidades fuera del mercado local.</p>
           <div class="badges">
-            <span class="badge">Mismo país</span>
-            <span class="badge">Europa</span>
-            <span class="badge">América</span>
+            <span class="badge">Liga</span>
+            <span class="badge">País</span>
+            <span class="badge">Continente</span>
           </div>
         </div>
 
         <div class="card">
-          <h3>Contexto por liga</h3>
-          <p>Índices por competición para interpretar los datos del jugador según el nivel y estilo de su liga.</p>
+          <h3>Comparador 1v1 (Pro/Business)</h3>
+          <p>Compara dos jugadores en la misma pantalla con pilares y tags de perfil.</p>
           <div class="badges">
-            <span class="badge">Nivel liga</span>
-            <span class="badge">Benchmark</span>
-            <span class="badge">Ajuste de contexto</span>
+            <span class="badge">1v1</span>
+            <span class="badge">Pilares</span>
+            <span class="badge">Decisión</span>
           </div>
         </div>
 
         <div class="card card-wide">
-          <h3>Opcional: implantación rápida para tu club</h3>
+          <h3>Business: información ampliada</h3>
           <p>
-            Onboarding sin fricción: definimos roles/criterios del club, configuramos filtros e índices, y dejamos listas
-            las vistas que el staff usará cada semana.
+            Cuando aplica: detalle ampliado, contrato, últimos partidos y carrera.
+            (Este módulo depende de disponibilidad/licencias de datos y del acuerdo con el cliente.)
           </p>
         </div>
       </div>
@@ -616,34 +728,26 @@
       <div class="section-head">
         <div>
           <h2>Casos de uso típicos</h2>
-          <p class="section-desc">Ejemplos reales para un club semi-pro: fichajes, sustituciones y mejora de plantilla.</p>
+          <p class="section-desc">Ejemplos reales: fichajes, sustituciones y shortlists defendibles.</p>
         </div>
       </div>
 
       <div class="grid">
         <div class="card">
           <h3>Sustituir una baja</h3>
-          <p>
-            Encuentra perfiles equivalentes con “similares” y valida con contexto de liga para no sobre/infra-valorar estadísticas.
-          </p>
+          <p>Encuentra perfiles equivalentes con similares y valida con contexto de liga para comparar con justicia.</p>
         </div>
         <div class="card">
-          <h3>Buscar un rol específico</h3>
-          <p>
-            Extremo vertical, 6 posicional, central dominador… filtras por rol y priorizas por tus índices (no por ruido).
-          </p>
+          <h3>Buscar un rol concreto</h3>
+          <p>Filtra por posición/rol y prioriza por índice: menos ruido y más foco.</p>
         </div>
         <div class="card">
           <h3>Oportunidades fuera del mercado local</h3>
-          <p>
-            Detecta jugadores comparables en Europa y América para ampliar opciones cuando el presupuesto es ajustado.
-          </p>
+          <p>Amplía radar con similares por continente o global cuando el presupuesto es ajustado.</p>
         </div>
         <div class="card">
-          <h3>Shortlist con criterio</h3>
-          <p>
-            Lista final defendible: ranking + explicación del índice + comparativa de similares (menos discusión, más acción).
-          </p>
+          <h3>Defender una decisión</h3>
+          <p>Comparador 1v1 + pilares: una narrativa clara para staff y dirección deportiva.</p>
         </div>
       </div>
     </section>
@@ -653,24 +757,24 @@
       <div class="section-head">
         <div>
           <h2>Contacto</h2>
-          <p class="section-desc">Cuéntanos tu objetivo (rol/posición, ligas, presupuesto) y te enseñamos una demo adaptada.</p>
+          <p class="section-desc">Cuéntanos tu objetivo (posición, ligas, presupuesto) y te enseñamos una demo adaptada.</p>
         </div>
       </div>
 
       <div class="contact-box">
         <div class="contact-info">
-          <div><b>Email:</b> <a href="mailto:contacto@elojeador?subject=Demo%20ElOjeador">contacto@elojeador.es</a></div>
-          <div><b>Twitter:</b> <a class="btn" href="https://x.com/ElOjeador_data" target="_blank" rel="noopener">🐦 X / Twitter</a></div>
+          <div><b>Email:</b> <a href="mailto:contacto@elojeador.es?subject=Demo%20ElOjeador">contacto@elojeador.es</a></div>
+          <div><b>Dashboard:</b> <a class="btn" href="https://dashboard.elojeador.es" target="_blank" rel="noopener">🔐 Acceder</a></div>
           <div><b>Respuesta:</b> en menos de 24–48h laborables</div>
         </div>
 
         <!-- Mini “form” sin backend: abre el mail con asunto y campos -->
         <div class="form">
-          <input class="input" id="club" placeholder="Nombre del club" />
-          <input class="input" id="objetivo" placeholder="Qué necesitas (ej. ‘central sub-23’)" />
+          <input class="input" id="club" placeholder="Nombre del club / agencia" />
+          <input class="input" id="objetivo" placeholder="Qué necesitas (ej. 'central sub-23')" />
           <a class="btn btn-primary" href="#" onclick="
             const club = encodeURIComponent(document.getElementById('club').value || 'Club');
-            const obj  = encodeURIComponent(document.getElementById('objetivo').value || 'Quiero una demo y conocer precios.');
+            const obj  = encodeURIComponent(document.getElementById('objetivo').value || 'Quiero una demo y conocer planes.');
             const subject = encodeURIComponent('Demo ElOjeador · ' + decodeURIComponent(club));
             const body = encodeURIComponent(
               'Hola,\n\nSomos ' + decodeURIComponent(club) + ' y queremos una demo de ElOjeador.\n\nObjetivo: ' + decodeURIComponent(obj) + '\n\nGracias.'
@@ -678,7 +782,7 @@
             window.location.href = 'mailto:contacto@elojeador.es?subject=' + subject + '&body=' + body;
             return false;
           ">Enviar</a>
-          <a class="btn" href="mailto:contacto@elojeador.es?subject=Precios%20ElOjeador">Ver precios</a>
+          <a class="btn" href="mailto:contacto@elojeador.es?subject=Planes%20ElOjeador">Ver planes</a>
         </div>
       </div>
     </section>
