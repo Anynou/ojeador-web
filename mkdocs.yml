@@ -1,0 +1,52 @@
+site_name: ElOjeador · Docs
+docs_dir: docs_src
+
+theme:
+  name: material
+  language: es
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - search.suggest
+    - search.highlight
+
+plugins:
+  - search
+  - i18n:
+      docs_structure: suffix
+      default_language: es
+      reconfigure_material: true
+      languages:
+        - locale: es
+          name: Español
+          default: true
+          build: true
+        - locale: en
+          name: English
+          build: true
+
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+
+nav:
+  - Inicio: index.md
+  - Dashboard:
+      - Inicio: dashboard/index.md
+      - Primeros pasos: dashboard/quickstart.md
+      - Overview: dashboard/overview.md
+      - Jugadores (Free): dashboard/free-players.md
+      - Ligas (Free): dashboard/leagues.md
+      - Scouting Search: dashboard/scouting-search.md
+      - Comparar: dashboard/compare.md
+      - Player Inspector: dashboard/player-inspector.md
+      - Upgrade y facturación: dashboard/billing-upgrade.md
+      - Glosario: dashboard/glossary.md
+
